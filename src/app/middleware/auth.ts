@@ -8,6 +8,7 @@ import AppError from "../errors/AppErros";
 import confiq from "../confiq";
 import { User } from "../../modules/User/User.model";
 import { TUserRole } from "../../modules/User/User.interface";
+import sendResponse from "../utils/sendResponse";
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -15,7 +16,15 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
     // checking if the token is missing
     if (!token) {
-      throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");
+      res.send({
+        success: false,
+        message: "Unauthorized Access",
+        errorMessage:
+          "You do not have the necessary permissions to access this resource.",
+        errorDetails: null,
+        stack: null,
+      });
+      return;
     }
 
     // checking if the given token is valid
@@ -24,7 +33,6 @@ const auth = (...requiredRoles: TUserRole[]) => {
       confiq.jwt_access_secret as string
     ) as JwtPayload;
 
-    
     const { role, _id, iat } = decoded;
 
     const user = await User.findById(_id);
@@ -34,10 +42,15 @@ const auth = (...requiredRoles: TUserRole[]) => {
     }
 
     if (requiredRoles && !requiredRoles.includes(role)) {
-      throw new AppError(
-        httpStatus.UNAUTHORIZED,
-        "You are not authorized  hi!"
-      );
+      res.send({
+        success: false,
+        message: "Unauthorized Access",
+        errorMessage:
+          "You do not have the necessary permissions to access this resource.",
+        errorDetails: null,
+        stack: null,
+      });
+      return;
     }
 
     req.user = decoded as JwtPayload;
