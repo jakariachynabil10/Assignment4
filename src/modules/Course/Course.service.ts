@@ -8,9 +8,11 @@ import { ReviewModel } from "../Review/review.model";
 import { ObjectId } from "mongodb";
 import { PriceQuery, SortQuery } from "../../app/interface/pagination";
 
-const createCourseIntoDB = async (payload: TCourse) => {
+const createCourseIntoDB = async (payload: TCourse, createdBy : any) => {
   payload.durationInWeeks = DurationWeeks(payload.startDate, payload.endDate);
+  payload.createdBy = createdBy
   const result = await CourseModel.create(payload);
+
   return result;
 };
 
@@ -44,9 +46,7 @@ const getAllCourseFromDB = async (query: any) => {
     pipeline.push({ $match: { price: PriceQuery } });
   }
 
-  // if (query?.tags) {
-  //   pipeline.push({$match : {tags : query?.tags}})
-  // }
+ 
 
   if (query?.startDate || query?.endDate) {
     pipeline.push({
@@ -70,8 +70,18 @@ const getAllCourseFromDB = async (query: any) => {
   if (query?.level) {
     pipeline.push({ $match: { "details.level": query.level } });
   }
+ 
+  pipeline.push({
+    $lookup: {
+      from: 'users', 
+      localField: 'createdBy',
+      foreignField: '_id',
+      as: 'createdBy'
+    }
+  });
+  
 
-  const result = await CourseModel.aggregate(pipeline);
+  const result = await CourseModel.aggregate(pipeline)
   return result;
 };
 

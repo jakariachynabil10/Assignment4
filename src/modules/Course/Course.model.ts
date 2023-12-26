@@ -24,6 +24,7 @@ const courseSchema = new Schema<TCourse>({
   instructor: { type: String },
   categoryId: {
     type: Schema.Types.ObjectId,
+    required : true,
     unique: true,
     ref: "category",
   },
@@ -40,6 +41,14 @@ const courseSchema = new Schema<TCourse>({
   provider: { type: String },
   durationInWeeks: { type: Number },
   details: detailsSchema,
+  createdBy : {
+    type : Schema.Types.ObjectId,
+    ref : 'user'
+  }
+}, {
+  timestamps : true
 });
+
+
 
 export const CourseModel = model<TCourse>("Course", courseSchema);
