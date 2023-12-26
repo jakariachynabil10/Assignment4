@@ -135,8 +135,8 @@ const updateSingleCourseFromDB = async (
 };
 
 const getSingleCourseWithReviewFromDB = async (id: string) => {
-  const course = await CourseModel.findById(id);
-  const review = await ReviewModel.find({ courseId: new ObjectId(id) });
+  const course = await CourseModel.findById(id).populate('createdBy');
+  const review = await ReviewModel.find({ courseId: new ObjectId(id) }).populate('createdBy');
   return { course, review };
 };
 
