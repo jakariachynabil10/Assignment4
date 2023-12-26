@@ -168,7 +168,22 @@ const getBestCourseOnAvarageRatingFromDB = async () => {
     {
       $limit: 1,
     },
+    {
+      $lookup: {
+        from: 'users', 
+        localField: 'createdBy',
+        foreignField: '_id',
+        as: 'createdBy'
+      }
+    },
+    {
+      $project: {
+        'createdBy.password': 0
+      }
+    }
+   
   ]).exec();
+
 
   const { averageRating, reviewCount, ...remainingData } = bestCourse[0];
   const bestCourses = {

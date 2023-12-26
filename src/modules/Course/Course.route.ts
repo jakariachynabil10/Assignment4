@@ -20,6 +20,6 @@ router.get(
   "/courses/:courseId/reviews",
   CourseControllers.getSingleCourseWithReview,
 );
-router.get("/courses/best", CourseControllers.getBestCourseOnAvarageRating);
+router.get("/course/best", CourseControllers.getBestCourseOnAvarageRating);
 
 export const CourseRoutes = router;
