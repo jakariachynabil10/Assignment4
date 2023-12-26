@@ -9,7 +9,7 @@ const createCategoryIntoDB = async (payload: Tcategory, id : any) => {
 };
 
 const getAllCategoryFromDB = async () => {
-  const result = await categoryModel.find();
+  const result = await categoryModel.find().populate('createdBy');
   return result;
 };
 
