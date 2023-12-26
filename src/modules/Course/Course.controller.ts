@@ -32,6 +32,7 @@ const updateSingleCourse = catchAsync(async (req, res) => {
   const result = await CourseServices.updateSingleCourseFromDB(
     courseId,
     req.body,
+    req.user._id
   );
 
   sendResponse(res, {

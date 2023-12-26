@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -88,6 +89,7 @@ const getAllCourseFromDB = async (query: any) => {
 const updateSingleCourseFromDB = async (
   id: string,
   payload: Partial<TCourse>,
+  createdBy : any
 ) => {
   const { details, tags, ...remainingData } = payload;
 
@@ -100,6 +102,7 @@ const updateSingleCourseFromDB = async (
   let modifiedData: Record<string, unknown> = {
     ...remainingData,
   };
+
 
   if (details && Object.keys(details).length > 0) {
     for (const [key, values] of Object.entries(details)) {
@@ -122,11 +125,12 @@ const updateSingleCourseFromDB = async (
     });
   }
   modifiedData.tags = previousTag;
+  modifiedData.createdBy = createdBy
 
   const result = await CourseModel.findByIdAndUpdate(id, modifiedData, {
     upsert: true,
     new: true,
-  });
+  }).populate('createdBy');
   return result;
 };
 

@@ -15,7 +15,7 @@ router.post(
 );
 
 router.get("/courses", CourseControllers.getAllCourses);
-router.put("/courses/:courseId", CourseControllers.updateSingleCourse);
+router.put("/courses/:courseId", auth(USER_ROLE.admin), CourseControllers.updateSingleCourse);
 router.get(
   "/courses/:courseId/reviews",
   CourseControllers.getSingleCourseWithReview,
