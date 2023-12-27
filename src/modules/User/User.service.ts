@@ -65,13 +65,18 @@ const changePassword = async (
     Number(confiq.bcrypt_salt_rounds)
   );
 
+  const newPasswordObject = [
+    newHashPassword,
+     new Date()
+  ]
+
   await User.findOneAndUpdate(
     {
       _id: userData._id,
     },
     {
       $set: { password: newHashPassword },
-      $push: { passwordHistory: new Date() },
+      $push: { passwordHistory: newPasswordObject },
     },
     {
       new: true,

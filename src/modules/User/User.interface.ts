@@ -9,6 +9,7 @@ export type TUser = {
   email: string;
   password: string;
   role: TRole;
+  passwordHistory? : object,
 };
 
 export type TLoginUser = {

@@ -18,6 +18,9 @@ const userSchema = new Schema<TUser>(
       type: String,
       enum: ["user", "admin"],
     },
+    passwordHistory : {
+      type : Object
+    }
   },
   {
     timestamps: true,
