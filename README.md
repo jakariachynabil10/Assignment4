@@ -16,4 +16,4 @@ NODE_ENV
     npm start
 
 ## API DOCUMENTATION
-    LINK : (https://documenter.getpostman.com/view/30059440/2s9YkuYyGz)    
+    LINK : [https://documenter.getpostman.com/view/30059440/2s9YkuYyGz)    
