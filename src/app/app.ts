@@ -17,7 +17,7 @@ app.use(cors());
 app.use("/api", CourseRoutes);
 app.use("/api", CategoryRoutes);
 app.use("/api", ReviewRouter);
-app.use("/auth", UserRoutes);
+app.use("/api", UserRoutes);
 
 const getAController = (req: Request, res: Response) => {
   res.send("Assignment 4");
