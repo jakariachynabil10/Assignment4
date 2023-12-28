@@ -7,6 +7,7 @@ import handleCastError from "../errors/handleCastError";
 import handleDuplicateError from "../errors/handleDuplicateError";
 import { ZodError } from "zod";
 import handleZodError from "../errors/handleZodError";
+import httpStatus from "http-status";
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode = 500;
@@ -38,6 +39,14 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     message = simplifiedError?.message;
     errorMessage = simplifiedError?.errorMessage;
     errorDetails = simplifiedError?.errorDetails;
+  } else  if (err) {
+    return res.status(httpStatus.UNAUTHORIZED).json({
+      success: false,
+      message: "Unauthorized Access",
+      errorMessage: "You do not have the necessary permissions to access this resource.",
+      errorDetails: null,
+      stack: null
+    });
   }
 
   return res.status(statusCode).json({
