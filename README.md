@@ -14,3 +14,6 @@ NODE_ENV
 ##### step 3 run with nodemon
 
     npm start
+
+## API DOCUMENTATION
+    LINK : (https://documenter.getpostman.com/view/30059440/2s9YkuYyGz)    

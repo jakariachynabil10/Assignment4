@@ -19,7 +19,7 @@ const userSchema = new Schema<TUser>(
       enum: ["user", "admin"],
     },
     passwordHistory : {
-      type : Object
+      type : [Object]
     }
   },
   {
